@@ -7,4 +7,11 @@
     <string name="title_activity_main">Main Activity</string>
     <string name="title_activity_work_orders">Work Orders</string>
     <string name="view_work_orders">View Work Orders</string>
+    <string name="no_zxing_scanner">Please install the ZXing Barcode
+        Scanner
+    </string>
+    <string name="canceled_scan">User has canceled the scan</string>
+    <string name="request_code_different">Request code is
+    	different than the starting request code.
+    </string>
 </resources>

@@ -6,7 +6,7 @@ import android.widget._
 import android.view.View
 import android.content._
 
-object WorkOrdersActivity extends ListActivity {
+object WorkOrdersActivity {
   val SCAN_INTENT = "com.google.zxing.client.android.SCAN"
   val PACKAGE_NAME = "com.google.zxing.client.android"
   val SCAN_MODE = "SCAN_MODE"
@@ -15,7 +15,7 @@ object WorkOrdersActivity extends ListActivity {
   val SCAN_RESULT_FORMAT = "SCAN_RESULT_FORMAT"
 }
 
-class WorkOrdersActivity extends ListActivity {
+class WorkOrdersActivity extends Activity {
 	
 	protected override def onCreate(savedInstanceState: Bundle): Unit = {
 	  super.onCreate(savedInstanceState)

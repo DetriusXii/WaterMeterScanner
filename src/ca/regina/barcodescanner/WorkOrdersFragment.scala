@@ -25,6 +25,7 @@ class WorkOrdersFragment extends ListFragment {
 	private def showDetails(index: Int): Unit = {
 	  selectedIndex = index;
 	  
+	  
 	  val workOrderDetail = 
 	    getFragmentManager.findFragmentById(R.id.details).asInstanceOf[WorkOrderDetail]
 	  val workOrderDetailOption = 
@@ -33,6 +34,7 @@ class WorkOrdersFragment extends ListFragment {
 	    } else {
 	      None
 	    }
+	  
 	  workOrderDetailOption.map(_ => {
 	    val newWorkOrderDetail = WorkOrderDetail(index, sentences(index))
 	    val ft = getFragmentManager.beginTransaction

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/work_order_label"
+        android:id="@+id/work_order_label" />
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/work_order_number"
+        android:layout_toRightOf="@id/work_order_label" />
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gps_coordinates_label"
+        android:id="@+id/gps_coordinates_label"
+        android:layout_below="@id/work_order_label" />
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+				android:id="@+id/gps_coordinates"
+				android:layout_toRightOf="@id/gps_coordinates_label" />
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/barcode_label"
+        android:id="@+id/barcode_label"
+        android:layout_below="@id/gps_coordinates_label" />
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/barcode_value"
+        android:layout_toRightOf="@id/barcode_label" />
+    <Button android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/scan_barcode"
+        android:text="@string/scan_barcode" />
+</RelativeLayout>

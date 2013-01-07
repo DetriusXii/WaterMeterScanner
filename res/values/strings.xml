@@ -14,4 +14,8 @@
     <string name="request_code_different">Request code is
     	different than the starting request code.
     </string>
+    <string name="work_order_label">Work Order: </string>
+    <string name="gps_coordinates_label">GPS coordinates:</string>
+    <string name="barcode_label">Barcode:</string>
+    <string name="scan_barcode">Scan Barcode</string>
 </resources>

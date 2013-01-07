@@ -16,8 +16,12 @@ object WorkOrdersActivity extends ListActivity {
 }
 
 class WorkOrdersActivity extends ListActivity {
-	val names = Array("Andrew", "Bob", "Tiamat", "Bahamut")
 	
+	protected override def onCreate(savedInstanceState: Bundle): Unit = {
+	  super.onCreate(savedInstanceState)
+	  setContentView(R.layout.activity_work_orders2)
+	}
+	/*
 	protected override def onCreate(savedInstanceState: Bundle): Unit = {
 	  super.onCreate(savedInstanceState)
 	  this.setContentView(R.layout.activity_work_orders)
@@ -61,6 +65,6 @@ class WorkOrdersActivity extends ListActivity {
 	    Toast.makeText(this, 
 	        R.string.request_code_different, Toast.LENGTH_SHORT).show
 	  }
-	}
+	}*/
 }
 

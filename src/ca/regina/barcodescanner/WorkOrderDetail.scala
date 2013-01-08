@@ -1,7 +1,7 @@
 package ca.regina.barcodescanner
 
 import android.app._
-import android.os.Bundle
+import android.os._
 import android.view._
 import android.widget._
 import android.content._
@@ -12,7 +12,18 @@ class WorkOrderDetail extends Fragment {
   def getShownIndex: Int = getArguments.getInt(WorkOrderDetail.LIST_INDEX_KEY)
   def getSentence: String = getArguments.getString(WorkOrderDetail.SENTENCE_KEY)
   private var workDetailsLayout: View = null 
+  private var handler: Handler = null
   
+  private def findViewById(id: Int): Option[View] = if (workDetailsLayout == null) {
+    None
+  } else {
+    val view = workDetailsLayout.findViewById(id)
+    if (view != null) {
+      Some(view)
+    } else {
+      None
+    }
+  }
   
   private def setScanBarcodeButton(workDetailsLayout: View): Unit = {
     val button = 
@@ -40,7 +51,7 @@ class WorkOrderDetail extends Fragment {
     
   }
   
-  def getGPSLocation: Option[String] = {
+  def updateWithGPSLocation(gpsLocationTextView: TextView): Unit = {
     val locationManager = getActivity.
     	getSystemService(Context.LOCATION_SERVICE).
     	asInstanceOf[LocationManager]
@@ -50,16 +61,24 @@ class WorkOrderDetail extends Fragment {
       if (gpsProvider != null) {Some(gpsProvider)} else {None}
     gpsProviderOption.map((gpsProvider: LocationProvider) => {
       locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER,
-    		  new LocationListener {
-    	  		override def onLocationChanged(location: Location): Unit = {
-    	  		  
-    	  		}
-      		  }
-      )
+		  new LocationListener {
+    	  	override def onProviderDisabled(provider: String): Unit = {}
+    	  	override def onProviderEnabled(provider: String): Unit = {}
+    	  	override def onStatusChanged(provider: String, status: Int, extras: Bundle) = {}
+        
+	  		override def onLocationChanged(location: Location): Unit = {
+	  		  val stringInfo = String.format("Latitude: %s Longitude: %s", 
+	  		      location.getLatitude.toString,
+	  		      location.getLongitude.toString)
+	  		  handler.post(new Runnable {
+	  		    override def run: Unit = {
+	  		      gpsLocationTextView.setText(stringInfo)
+	  		    }
+	  		  })
+	  		}
+		  }, Looper.getMainLooper)
     })
     
-      locationManager.requestSingleUpdate(
-        LocationManager.GPS_PROVIDER)
   }
   
   override def onActivityResult(requestCode: Int,
@@ -79,7 +98,12 @@ class WorkOrderDetail extends Fragment {
 	      barcodeValue.setText(contents)
 	    })
 	    
-	    
+	    val gpsCoordinatesTextViewOption = 
+	      this.findViewById(R.id.gps_coordinates).map(_.asInstanceOf[TextView])
+	    gpsCoordinatesTextViewOption.map((gpsCoordinatesTextView: TextView) => {
+	      updateWithGPSLocation(gpsCoordinatesTextView)
+	    })
+	      
 	  } else if (requestCode == 0 && resultCode == Activity.RESULT_CANCELED) {
 	    Toast.makeText(getActivity(), R.string.canceled_scan, Toast.LENGTH_SHORT).show
 	  } else {
@@ -93,27 +117,10 @@ class WorkOrderDetail extends Fragment {
     workDetailsLayout =
       inflater.inflate(R.layout.fragment_work_details, null)
       
-    workDetailsLayout.findViewById(R.id.scan_barcode).asInstanceOf[Button]
-     
-    val containerOption = 
-      if (container == null) {
-        None
-      } else {
-        Some(container)
-      }
+    setScanBarcodeButton(workDetailsLayout)
+    handler = new Handler
     
-    containerOption.map(container => {
-      val textView = new TextView(getActivity)
-      textView.setText(getSentence)
-      textView
-    }) match {
-      case Some(textView: TextView) => {
-        textView
-      }
-      case None => {
-        null
-      }
-    }
+    workDetailsLayout
   }
 }
 
